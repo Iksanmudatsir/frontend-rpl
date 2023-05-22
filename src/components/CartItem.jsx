@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { useStateValue } from "../context/StateProvider";
 import { actionType } from "../context/reducer";
 import { fetchCart } from "../utils/fetchLocalStorageData";
+import { BASE_URL_MENU } from "../utils/constant";
 let items = [];
 
 const CartItem = ({ item, setFlag, flag }) => {
@@ -52,9 +53,9 @@ const CartItem = ({ item, setFlag, flag }) => {
   }, [qty, items]);
 
   return (
-    <div className="w-full p-1 px-2 rounded-lg bg-cartItem flex items-center gap-2">
+    <div className="w-full p-1 px-2 rounded-lg bg-transparent flex items-center gap-2">
       <img
-        src={item?.imageURL}
+        src={`${BASE_URL_MENU}/${item?.imageURL}`}
         className="w-20 h-20 max-w-[60px] rounded-full object-contain"
         alt=""
       />

@@ -7,15 +7,17 @@ import { getAllFoodItems } from "./utils/firebaseFunctions";
 import { actionType } from "./context/reducer";
 import LoadingScreen from "./components/loadingscreen";
 import { useNavigate } from "react-router-dom";
+import AxiosInstance from "./utils/AxiosInstance";
 
 const App = () => {
   const [{ foodItems }, dispatch] = useStateValue();
 
   const fetchData = async () => {
-    await getAllFoodItems().then((data) => {
+    // await AxiosInstance.get('/item').then((data) => console.log(data));
+    await AxiosInstance.get('/item').then((data) => {
       dispatch({
         type: actionType.SET_FOOD_ITEMS,
-        foodItems: data,
+        foodItems: data.data,
       });
     });
   };
@@ -45,7 +47,7 @@ const App = () => {
           <Routes>
             <Route path="/*" element={<LoadingScreen />} />
             {/* <Route path="/*" element={<MainContainer />} /> */}
-            
+
           </Routes>
         </main>
       </div>
