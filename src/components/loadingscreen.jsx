@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import MainContainer from "./MainContainer";
 
 function LoadingScreen() {
   const [loading, setLoading] = useState(true);
@@ -6,20 +7,21 @@ function LoadingScreen() {
   useEffect(() => {
     const timeout = setTimeout(() => {
       setLoading(false);
-    }, 5000);
+    }, 3000);
     return () => clearTimeout(timeout);
   }, []);
 
   return (
     <div>
       {loading ? (
-        <div className="fixed top-0 left-0 w-screen h-screen bg-white flex justify-center items-center">
-          <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"></div>
-        </div>
+        <div className="relative">
+          <img src='https://aheioqhobo.cloudimg.io/v7/_playground-bucket-v2.teleporthq.io_/76b6f2ff-6e07-4082-9343-1eecd459ad04/0af37204-fe01-42d3-9a39-851e7cbd68e4?org_if_sml=1455757' alt='' className="w-full h-full object-cover" />
+          <div className='absolute inset-0 flex items-center justify-center'>
+              <p className="text-white font-bold text-center text-2xl">Selamat Datang</p>
+          </div>
+      </div>
       ) : (
-        <div>
-          // Kode untuk menampilkan halaman utama website
-        </div>
+        <MainContainer></MainContainer>
       )}
     </div>
   );

@@ -5,6 +5,8 @@ import { CreateContainer, Header, MainContainer } from "./components";
 import { useStateValue } from "./context/StateProvider";
 import { getAllFoodItems } from "./utils/firebaseFunctions";
 import { actionType } from "./context/reducer";
+import LoadingScreen from "./components/loadingscreen";
+import { useNavigate } from "react-router-dom";
 
 const App = () => {
   const [{ foodItems }, dispatch] = useStateValue();
@@ -18,6 +20,18 @@ const App = () => {
     });
   };
 
+  // const navigate = useNavigate();
+
+  // useEffect(() => {
+  //   const delay = 1000;
+
+  //   const timeout = setTimeout(() => {
+  //     navigate("/*");
+  //   }, delay);
+
+  //   return () => clearTimeout(timeout);
+  // }, [navigate]);
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -29,7 +43,8 @@ const App = () => {
 
         <main className="mt-14 md:mt-20 px-4 md:px-16 py-4 w-full">
           <Routes>
-            <Route path="/*" element={<MainContainer />} />
+            <Route path="/*" element={<LoadingScreen />} />
+            {/* <Route path="/*" element={<MainContainer />} /> */}
             
           </Routes>
         </main>
