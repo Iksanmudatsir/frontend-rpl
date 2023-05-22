@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { MdOutlineKeyboardBackspace } from "react-icons/md";
 import { RiRefreshFill } from "react-icons/ri";
-
 import { motion } from "framer-motion";
 import { useStateValue } from "../context/StateProvider";
 import { actionType } from "../context/reducer";
 import EmptyCart from "../img/emptyCart.svg";
 import CartItem from "./CartItem";
+import Invoice from "./invoice";
+import { Link, useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom/dist";
+import { useHistory } from 'react-router-dom';
 
 const CartContainer = () => {
   const [{ cartShow, cartItems, user }, dispatch] = useStateValue();
   const [flag, setFlag] = useState(1);
   const [tot, setTot] = useState(0);
+  const [showInvoice, setShowInvoice] = useState(false);
 
   const showCart = () => {
     dispatch({
@@ -36,6 +40,28 @@ const CartContainer = () => {
 
     localStorage.setItem("cartItems", JSON.stringify([]));
   };
+
+  const history = useNavigate;
+
+  // useEffect(() => {
+  //   if (showInvoice) {
+  //     const timer = setTimeout(() => {
+  //       setShowInvoice(false);
+  //       Navigate.push('./MenuContainer.jsx');
+  //     }, 7000);
+  //     return () => clearTimeout(timer)
+  //   }
+  // }, [showInvoice, Navigate])
+
+  const handleCheckout = () => {
+    setShowInvoice(true);
+  };
+
+  // const navigate = useNavigate();
+
+  // const handleCheckout = () => {
+  //   navigate("./invoice.jsx");
+  // };
 
   return (
     <motion.div
@@ -79,14 +105,14 @@ const CartContainer = () => {
 
           {/* cart total section */}
           <div className="w-full flex-1 bg-cartTotal rounded-t-[2rem] flex flex-col items-center justify-evenly px-8 py-2">
-            <div className="w-full flex items-center justify-between">
+            {/* <div className="w-full flex items-center justify-between">
               <p className="text-gray-400 text-lg">Sub Total</p>
-              <p className="text-gray-400 text-lg">Rp {tot}</p>
-            </div>
-            <div className="w-full flex items-center justify-between">
+              <p className="text-gray-400 text-lg">Rp{tot}</p>
+            </div> */}
+            {/* <div className="w-full flex items-center justify-between">
               <p className="text-gray-400 text-lg">Biaya Layanan</p>
-              <p className="text-gray-400 text-lg">Rp 2</p>
-            </div>
+              <p className="text-gray-400 text-lg">Rp</p>
+            </div> */}
 
             <div className="w-full border-b border-gray-600 my-2"></div>
 
@@ -102,6 +128,7 @@ const CartContainer = () => {
                 whileTap={{ scale: 0.8 }}
                 type="button"
                 className="w-full p-2 rounded-full bg-gradient-to-tr from-orange-800 to-orange-900 text-gray-50 text-lg my-2 hover:shadow-lg"
+                onClick={handleCheckout}
               >
                 Check Out
               </motion.button>
@@ -110,9 +137,28 @@ const CartContainer = () => {
                 whileTap={{ scale: 0.8 }}
                 type="button"
                 className="w-full p-2 rounded-full bg-gradient-to-tr from-orange-800 to-orange-900 text-gray-50 text-lg my-2 hover:shadow-lg"
+                onClick={handleCheckout}
               >
                 Check Out
               </motion.button>
+            )}
+           {showInvoice && (
+              <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-70">
+                <div className="bg-white rounded-lg p-6 w-11/12 relative">
+                  <Invoice cartItems={cartItems} total={tot} />
+                  <div className=" flex justify-end">
+                    <button
+                      className="px-4 py-2 bg-gray-500 text-white rounded-lg"
+                      onClick={() => {
+                        setShowInvoice(false);
+                        window.close();
+                      }}
+                    >
+                      Back to home
+                    </button>
+                    </div>
+                </div>
+              </div>
             )}
           </div>
         </div>
