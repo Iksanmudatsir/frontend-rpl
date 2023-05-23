@@ -154,7 +154,7 @@ const CartContainer = () => {
                         window.close();
                       }}
                     >
-                      Back to home
+                      Done!!
                     </button>
                     </div>
                 </div>
