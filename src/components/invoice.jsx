@@ -37,7 +37,7 @@ const Invoice = ({ cartItems, total }) => {
                   <td className="py-2 text-[8px] text-left">{item.title}</td>
                   <td className="px-4 py-2 text-[8px] text-left">{item.price}</td>
                   <td className="px-4 py-2 text-[8px] text-left">{item.qty}</td>
-                  <td className="px-4 py-2 text-[8px] text-left">{item.price * item.qty}</td>
+                  <td className="px-4 py-2 text-[8px] text-left">Rp.{item.price * item.qty}</td>
                 </tr>
               ))}
             </tbody>
@@ -45,11 +45,11 @@ const Invoice = ({ cartItems, total }) => {
           <div className="w-full h-0.5 rounded-[5px] bg-[#8e3200] mt-2"/>
                 <div className="px-2 flex justify-between items-center">
                   <p className="text-[6px] font-medium text-left text-black py-3">Terima Kasih</p>
-                  <p className="text-[8px] px-2 font-semibold text-left text-[#8e3200]">Total : {total}</p>
+                  <p className="text-[8px] px-2 font-semibold text-left text-[#8e3200]">Total : Rp.{total}</p>
                 </div>
         </div>
         <div className="mb-2">
-          <span className="text-[#8e3200] text-[10px] font-semibold">SIlahkan melakukan pembayaran secara langsung di kasir!!</span>
+          <span className="text-[#8e3200] text-[10px] font-semibold">Silahkan melakukan pembayaran secara langsung di kasir!!. Klik done untuk keluar</span>
         </div>
     </div>
   );

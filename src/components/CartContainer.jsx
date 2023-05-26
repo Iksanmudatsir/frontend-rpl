@@ -87,21 +87,26 @@ const CartContainer = () => {
 
       {/* bottom section */}
       {cartItems && cartItems.length > 0 ? (
-        <div className="w-full h-full bg-cartBg rounded-t-[2rem] flex flex-col">
-          {/* cart Items section */}
-          <div className="w-full h-340 md:h-42 px-6 py-10 flex flex-col gap-3 overflow-y-scroll scrollbar-none">
-            {/* cart Item */}
-            {cartItems &&
-              cartItems.length > 0 &&
-              cartItems.map((item) => (
+      <div className="w-full h-full bg-cartBg rounded-t-[2rem] flex flex-col">
+        {/* cart Items section */}
+        <div className="w-full h-340 md:h-42 px-6 py-10 flex flex-col gap-3 overflow-y-scroll scrollbar-none">
+          {/* cart Item */}
+          {cartItems &&
+            cartItems.length > 0 &&
+            cartItems.map((item) => {
+              const existingItem = cartItems.find((cartItem) => cartItem.id === item.id);
+
+              return (
                 <CartItem
                   key={item.id}
                   item={item}
+                  quantity={existingItem ? existingItem.quantity : 1}
                   setFlag={setFlag}
                   flag={flag}
                 />
-              ))}
-          </div>
+              );
+            })}
+        </div>
 
           {/* cart total section */}
           <div className="w-full flex-1 bg-cartTotal rounded-t-[2rem] flex flex-col items-center justify-evenly px-8 py-2">
@@ -119,7 +124,7 @@ const CartContainer = () => {
             <div className="w-full flex items-center justify-between">
               <p className="text-gray-200 text-xl font-semibold">Total</p>
               <p className="text-gray-200 text-xl font-semibold">
-                Rp{tot + 2}
+                Rp{tot}
               </p>
             </div>
 
@@ -152,6 +157,7 @@ const CartContainer = () => {
                       onClick={() => {
                         setShowInvoice(false);
                         window.close();
+                        alert("Jika website tidak menutup secara otomatis silakan tutup jendela secara manual karena pesanan anda telah direkam. Terima kasih");
                       }}
                     >
                       Done!!
