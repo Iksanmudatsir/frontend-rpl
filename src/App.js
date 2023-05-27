@@ -1,13 +1,12 @@
-import React, { useEffect } from "react";
-import { Route, Routes } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import { AnimatePresence } from "framer-motion";
-import { CreateContainer, Header, MainContainer } from "./components";
+import { CreateContainer, Header, MainContainer, MenuContainer, HomeContainer } from "./components";
 import { useStateValue } from "./context/StateProvider";
 import { getAllFoodItems } from "./utils/firebaseFunctions";
 import { actionType } from "./context/reducer";
 import LoadingScreen from "./components/loadingscreen";
-import { useNavigate } from "react-router-dom";
 import AxiosInstance from "./utils/AxiosInstance";
+import { BrowserRouter as Router, Route, Routes, Link, useNavigate, useLocation } from "react-router-dom";
 
 const App = () => {
   const [{ foodItems }, dispatch] = useStateValue();
@@ -22,37 +21,42 @@ const App = () => {
     });
   };
 
-  // const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(true);
 
-  // useEffect(() => {
-  //   const delay = 1000;
+  const navigate = useNavigate();
 
-  //   const timeout = setTimeout(() => {
-  //     navigate("/*");
-  //   }, delay);
-
-  //   return () => clearTimeout(timeout);
-  // }, [navigate]);
+  const location = useLocation();
 
   useEffect(() => {
     fetchData();
-  }, []);
+    setTimeout(() => {
+      setIsLoading(false);
+      navigate("/home");
+    }, 2000)
+  }, [navigate]);
+
+  useEffect(() => {
+    if (location.pathname !== '/' && location.pathname !== '/home') {
+      navigate('/loading');
+    }
+  }, [location.pathname, navigate])
+
 
   return (
     <AnimatePresence exitBeforeEnter>
-      <div className="w-screen h-auto flex flex-col bg-primary">
-        <Header />
+    <div className="w-screen h-auto flex flex-col bg-primary">
+      <Header />
 
-        <main className="mt-14 md:mt-20 px-4 md:px-16 py-4 w-full">
-          <Routes>
-            <Route path="/*" element={<LoadingScreen />} />
-            {/* <Route path="/*" element={<MainContainer />} /> */}
-
-          </Routes>
-        </main>
-      </div>
-    </AnimatePresence>
-  );
+      <main className="mt-14 md:mt-20 px-4 md:px-16 py-4 w-full">
+        <Routes>
+          <Route path="/" element={isLoading ? <LoadingScreen /> : <MainContainer />} />
+          <Route path="/home" element={<MainContainer />} />
+          <Route path="/loading" element={<LoadingScreen />} />
+        </Routes>
+      </main>
+    </div>
+  </AnimatePresence>
+);
 };
 
 export default App;

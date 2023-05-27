@@ -128,7 +128,7 @@ const RowContainer = ({ flag, data, scrollValue }) => {
             <div className="w-full h-16 rounded-md bg-white mx-auto shadow-md px-3 py-2 flex justify-between">
               <div className="flex flex-col">
                 <h2 className="text-lg mb-1 font-bold text-left text-black">{selectedItem?.title}</h2>
-                <p className="text-sm font-bold text-left text-[#c50d11]">{selectedItem?.price}</p>
+                <p className="text-sm font-bold text-left text-[#c50d11]">Rp. {selectedItem?.price}</p>
               </div>
               <div className="flex mt-2">
                 <button
@@ -139,9 +139,9 @@ const RowContainer = ({ flag, data, scrollValue }) => {
                 </button>
               </div>
             </div>
-            <div className="w-full h-10 rounded-md bg-white mx-auto shadow-md px-3 py-2 flex justify-between mt-5 mb-10">
-              <p className="w-12 h-3 text-[8px] font-semibold text-left text-black">Description</p>
-              <p className="text-sm">{selectedItem?.description}</p>
+            <div className="w-full h-full rounded-md bg-white mx-auto shadow-md px-3 py-2 flex flex-col mt-5 mb-10 overflow-hidden">
+              <p className="w-12 h-3 text-[16px] font-semibold text-left text-black">Description</p>
+              <p className="text-sm w-64 h-full text-[10px] mt-3 text-left text-black text-justify">{selectedItem?.desc}</p>
             </div>
           </div>
         </div>

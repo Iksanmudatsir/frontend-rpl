@@ -16,6 +16,7 @@ const CartContainer = () => {
   const [flag, setFlag] = useState(1);
   const [tot, setTot] = useState(0);
   const [showInvoice, setShowInvoice] = useState(false);
+  const navigate = useNavigate();
 
   const showCart = () => {
     dispatch({
@@ -56,6 +57,12 @@ const CartContainer = () => {
   const handleCheckout = () => {
     setShowInvoice(true);
   };
+
+  const handleDoneButton = () => {
+    window.close();
+
+    navigate('/loading')
+  }
 
   // const navigate = useNavigate();
 
@@ -152,12 +159,14 @@ const CartContainer = () => {
                 <div className="bg-white rounded-lg p-6 w-11/12 relative">
                   <Invoice cartItems={cartItems} total={tot} />
                   <div className=" flex justify-end">
-                    <button
+                  <button
                       className="px-4 py-2 bg-gray-500 text-white rounded-lg"
                       onClick={() => {
                         setShowInvoice(false);
-                        window.close();
-                        alert("Jika website tidak menutup secara otomatis silakan tutup jendela secara manual karena pesanan anda telah direkam. Terima kasih");
+                        handleDoneButton();
+                        alert(
+                          "Jika website tidak menutup secara otomatis silakan tutup jendela secara manual karena pesanan anda telah direkam. Terima kasih"
+                        );
                       }}
                     >
                       Done!!
