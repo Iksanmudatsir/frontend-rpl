@@ -164,9 +164,9 @@ const CartContainer = () => {
                       onClick={() => {
                         setShowInvoice(false);
                         handleDoneButton();
-                        alert(
-                          "Jika website tidak menutup secara otomatis silakan tutup jendela secara manual karena pesanan anda telah direkam. Terima kasih"
-                        );
+                        // alert(
+                        //   "Jika website tidak menutup secara otomatis silakan tutup jendela secara manual karena pesanan anda telah direkam. Terima kasih"
+                        // );
                       }}
                     >
                       Done!!
