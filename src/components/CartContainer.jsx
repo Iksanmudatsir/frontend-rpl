@@ -10,11 +10,14 @@ import Invoice from "./invoice";
 import { Link, useNavigate } from "react-router-dom";
 import { Navigate } from "react-router-dom/dist";
 import { useHistory } from 'react-router-dom';
+import AxiosInstance from "../utils/AxiosInstance";
+import { removeAuth } from "../utils/auth";
 
 const CartContainer = () => {
-  const [{ cartShow, cartItems, user }, dispatch] = useStateValue();
+  const [{ cartShow, cartItems, orderId }, dispatch] = useStateValue();
   const [flag, setFlag] = useState(1);
   const [tot, setTot] = useState(0);
+  const [itemsIds, setItemsId] = useState([]);
   const [showInvoice, setShowInvoice] = useState(false);
   const navigate = useNavigate();
 
@@ -30,7 +33,8 @@ const CartContainer = () => {
       return accumulator + item.qty * item.price;
     }, 0);
     setTot(totalPrice);
-    console.log(tot);
+    const ids = cartItems.map(({ id }) => id);
+    setItemsId([...ids]);
   }, [tot, flag]);
 
   const clearCart = () => {
@@ -54,14 +58,21 @@ const CartContainer = () => {
   //   }
   // }, [showInvoice, Navigate])
 
-  const handleCheckout = () => {
-    setShowInvoice(true);
+  const handleCheckout = async () => {
+    await AxiosInstance.post('/order', {
+      item_id: itemsIds
+    }).then((res) => {
+      dispatch({
+        type: actionType.SET_ORDERID,
+        orderId: res.data.orderId,
+      });
+    })
+    removeAuth();
+    navigate('/invoice');
   };
 
   const handleDoneButton = () => {
-    window.close();
-
-    navigate('/loading')
+    // navigate('/invoicePage'); // ke halaman invoice
   }
 
   // const navigate = useNavigate();
@@ -94,40 +105,30 @@ const CartContainer = () => {
 
       {/* bottom section */}
       {cartItems && cartItems.length > 0 ? (
-      <div className="w-full h-full bg-cartBg rounded-t-[2rem] flex flex-col">
-        {/* cart Items section */}
-        <div className="w-full h-340 md:h-42 px-6 py-10 flex flex-col gap-3 overflow-y-scroll scrollbar-none">
-          {/* cart Item */}
-          {cartItems &&
-            cartItems.length > 0 &&
-            cartItems.map((item) => {
-              const existingItem = cartItems.find((cartItem) => cartItem.id === item.id);
+        <div className="w-full h-full bg-cartBg rounded-t-[2rem] flex flex-col">
+          {/* cart Items section */}
+          <div className="w-full h-340 md:h-42 px-6 py-10 flex flex-col gap-3 overflow-y-scroll scrollbar-none">
+            {/* cart Item */}
+            {cartItems &&
+              cartItems.length > 0 &&
+              cartItems.map((item) => {
+                const existingItem = cartItems.find((cartItem) => cartItem.id === item.id);
 
-              return (
-                <CartItem
-                  key={item.id}
-                  item={item}
-                  quantity={existingItem ? existingItem.quantity : 1}
-                  setFlag={setFlag}
-                  flag={flag}
-                />
-              );
-            })}
-        </div>
+                return (
+                  <CartItem
+                    key={item.id}
+                    item={item}
+                    quantity={existingItem ? existingItem.quantity : 1}
+                    setFlag={setFlag}
+                    flag={flag}
+                  />
+                );
+              })}
+          </div>
 
           {/* cart total section */}
           <div className="w-full flex-1 bg-cartTotal rounded-t-[2rem] flex flex-col items-center justify-evenly px-8 py-2">
-            {/* <div className="w-full flex items-center justify-between">
-              <p className="text-gray-400 text-lg">Sub Total</p>
-              <p className="text-gray-400 text-lg">Rp{tot}</p>
-            </div> */}
-            {/* <div className="w-full flex items-center justify-between">
-              <p className="text-gray-400 text-lg">Biaya Layanan</p>
-              <p className="text-gray-400 text-lg">Rp</p>
-            </div> */}
-
             <div className="w-full border-b border-gray-600 my-2"></div>
-
             <div className="w-full flex items-center justify-between">
               <p className="text-gray-200 text-xl font-semibold">Total</p>
               <p className="text-gray-200 text-xl font-semibold">
@@ -135,7 +136,7 @@ const CartContainer = () => {
               </p>
             </div>
 
-            {user ? (
+            {
               <motion.button
                 whileTap={{ scale: 0.8 }}
                 type="button"
@@ -144,22 +145,13 @@ const CartContainer = () => {
               >
                 Check Out
               </motion.button>
-            ) : (
-              <motion.button
-                whileTap={{ scale: 0.8 }}
-                type="button"
-                className="w-full p-2 rounded-full bg-gradient-to-tr from-orange-800 to-orange-900 text-gray-50 text-lg my-2 hover:shadow-lg"
-                onClick={handleCheckout}
-              >
-                Check Out
-              </motion.button>
-            )}
-           {showInvoice && (
+            }
+            {showInvoice && (
               <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-70">
                 <div className="bg-white rounded-lg p-6 w-11/12 relative">
                   <Invoice cartItems={cartItems} total={tot} />
                   <div className=" flex justify-end">
-                  <button
+                    <button
                       className="px-4 py-2 bg-gray-500 text-white rounded-lg"
                       onClick={() => {
                         setShowInvoice(false);
@@ -171,7 +163,7 @@ const CartContainer = () => {
                     >
                       Done!!
                     </button>
-                    </div>
+                  </div>
                 </div>
               </div>
             )}
