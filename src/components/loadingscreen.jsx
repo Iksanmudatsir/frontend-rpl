@@ -14,12 +14,11 @@ function LoadingScreen() {
   const navigate = useNavigate();
   
   const loginUser = async () => {
-    console.log(id);
-    // await axios.post(BASE_SIGNIN_USER, {
-    //   table: id
-    // }).then((res) => {
-    //   console.log(`res ${res}`);
-    // });
+    await axios.post(BASE_SIGNIN_USER, {
+      table: id
+    }).then((res) => {
+      console.log('tsetse', res.data);
+    });
   }
 
   useEffect(() => {
