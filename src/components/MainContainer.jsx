@@ -12,7 +12,6 @@ import { actionType } from "../context/reducer";
 const MainContainer = () => {
   const [{ foodItems, cartShow }, dispatch] = useStateValue();
 
-
   const fetchData = async () => {
     await AxiosInstance.get('/item').then((data) => {
       dispatch({

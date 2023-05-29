@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { BASE_SIGNIN_USER } from "../utils/constant";
 import axios from 'axios';
 import { Navigate, useNavigate } from "react-router-dom";
+import { storeAuth, getToken } from "../utils/auth";
 
 function LoadingScreen() {
   const [loading, setLoading] = useState(true);
@@ -13,12 +14,12 @@ function LoadingScreen() {
   const navigate = useNavigate();
   
   const loginUser = async () => {
-    await axios.post(BASE_SIGNIN_USER, {
-      table: id
-    }).then((res) => {
-      // simpan token di localstorage
-      navigate('/home');
-    });
+    console.log(id);
+    // await axios.post(BASE_SIGNIN_USER, {
+    //   table: id
+    // }).then((res) => {
+    //   console.log(`res ${res}`);
+    // });
   }
 
   useEffect(() => {
