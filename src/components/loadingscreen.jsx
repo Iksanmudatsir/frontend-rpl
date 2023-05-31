@@ -4,9 +4,12 @@ import { BASE_SIGNIN_USER } from "../utils/constant";
 import axios from 'axios';
 import { storeAuth, getToken } from "../utils/auth";
 import { useStateValue } from "../context/StateProvider";
+import { actionType } from "../context/reducer";
 
 function LoadingScreen() {
   const { id } = useParams(); // Mendapatkan nilai parameter dari URL
+
+  const [{ tableId }, dispatch] = useStateValue();
 
   const navigate = useNavigate();
 
@@ -15,6 +18,10 @@ function LoadingScreen() {
       table: id
     }).then((res) => {
       storeAuth(res.data);
+      dispatch({
+        type: actionType.SET_TABLEID,
+        tableId: id,
+      });
     });
     navigate('/');
   }

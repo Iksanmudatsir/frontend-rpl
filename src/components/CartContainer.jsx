@@ -69,6 +69,7 @@ const CartContainer = () => {
     })
     removeAuth();
     navigate('/invoice');
+    alert("pesanan telah terekam, anda dapat scan ulang atau menutup manual website ini")
   };
 
   const handleDoneButton = () => {

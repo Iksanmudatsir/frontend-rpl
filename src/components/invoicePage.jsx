@@ -3,7 +3,7 @@ import Invoice from "./invoice";
 import { useStateValue } from "../context/StateProvider";
 
 const InvoicePage = () => {
-  const [{ cartItems, orderId }, dispatch] = useStateValue();
+  const [{ cartItems, orderId, tableId }, dispatch] = useStateValue();
 
   const totalPrice = cartItems.reduce(function (accumulator, item) {
     return accumulator + item.qty * item.price;
@@ -15,8 +15,8 @@ const InvoicePage = () => {
 
   return (
     <div>
-      <h1 className="h-4 font-bold text-left text-black mb-2">Invoice</h1>
-      <Invoice cartItems={cartItems} total={totalPrice} orderId={orderId} />
+      {/* <h1 className="h-4 font-bold text-left text-black mb-2">Invoice</h1> */}
+      <Invoice cartItems={cartItems} total={totalPrice} orderId={orderId} tableId={tableId} />
     </div>
   );
 };

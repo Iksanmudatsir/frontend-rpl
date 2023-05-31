@@ -4,6 +4,7 @@ export const actionType = {
   SET_CART_SHOW: "SET_CART_SHOW",
   SET_CARTITEMS: "SET_CARTITEMS",
   SET_ORDERID: "SET_ORDERID",
+  SET_TABLEID: "SET_TABLEID",
 };
 
 const reducer = (state, action) => {
@@ -38,6 +39,12 @@ const reducer = (state, action) => {
       return {
         ...state,
         orderId: action.orderId,
+      };
+
+    case actionType.SET_TABLEID:
+      return {
+        ...state,
+        tableId: action.tableId,
       };
 
     default:
