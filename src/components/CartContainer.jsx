@@ -17,9 +17,10 @@ const CartContainer = () => {
   const [{ cartShow, cartItems, orderId }, dispatch] = useStateValue();
   const [flag, setFlag] = useState(1);
   const [tot, setTot] = useState(0);
-  const [itemsIds, setItemsId] = useState([]);
+  const [itemsIds, setItemsIds] = useState([]);
   const [showInvoice, setShowInvoice] = useState(false);
   const navigate = useNavigate();
+  const [itemsQtys, setItemsQtys] = useState([]);
 
   const showCart = () => {
     dispatch({
@@ -34,7 +35,9 @@ const CartContainer = () => {
     }, 0);
     setTot(totalPrice);
     const ids = cartItems.map(({ id }) => id);
-    setItemsId([...ids]);
+    const qtys = cartItems.map(({ qty }) => qty);
+    setItemsIds([...ids]);
+    setItemsQtys([...qtys]);
   }, [tot, flag]);
 
   const clearCart = () => {
@@ -60,7 +63,8 @@ const CartContainer = () => {
 
   const handleCheckout = async () => {
     await AxiosInstance.post('/order', {
-      item_id: itemsIds
+      items_ids: itemsIds,
+      items_qtys: itemsQtys
     }).then((res) => {
       dispatch({
         type: actionType.SET_ORDERID,

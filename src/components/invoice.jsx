@@ -37,9 +37,9 @@ const Invoice = ({ cartItems, total, orderId, tableId }) => {
             </tr>
           </thead>
           <tbody>
-            {cartItems.map((item) => (
+            {cartItems.map((item, i) => (
               <tr key={item.id}>
-                <td className="px-4 py-2 text-[8px] text-left">1</td>
+                <td className="px-4 py-2 text-[8px] text-left">{i + 1}</td>
                 <td className="py-2 text-[8px] text-left">{item.title}</td>
                 <td className="px-4 py-2 text-[8px] text-left">{item.price}</td>
                 <td className="px-4 py-2 text-[8px] text-left">{item.qty}</td>
