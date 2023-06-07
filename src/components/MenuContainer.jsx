@@ -17,7 +17,7 @@ const MenuContainer = () => {
           <p className="text-2xl font-semibold capitalize text-headingColor relative before:absolute before:rounded-lg before:content before:w-16 before:h-1 before:-bottom-2 before:left-0 before:bg-gradient-to-tr from-orange-400 to-orange-600 transition-all ease-in-out duration-100 mr-auto">
             All Menu
           </p>
-          <input type="search" className="w-36 border border-gray-300 rounded-lg px-4 py-1 h-6 focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700 placeholder-gray-500 text-xs" placeholder="Search..." />
+          {/* <input type="search" className="w-36 border border-gray-300 rounded-lg px-4 py-1 h-6 focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700 placeholder-gray-500 text-xs" placeholder="Search..." /> */}
         </div>
 
         <div className="w-full flex items-center justify-start lg:justify-center gap-8 py-6 overflow-x-scroll scrollbar-none">
