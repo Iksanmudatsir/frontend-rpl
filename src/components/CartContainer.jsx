@@ -10,7 +10,7 @@ import Invoice from "./invoice";
 import { useNavigate } from "react-router-dom";
 import AxiosInstance from "../utils/AxiosInstance";
 import { removeAuth } from "../utils/auth";
-import socket from "../utils/SocketInstance";
+import SocketInstance from "../utils/SocketInstance";
 
 const CartContainer = () => {
   const [{ cartShow, cartItems, orderId }, dispatch] = useStateValue();
@@ -72,7 +72,7 @@ const CartContainer = () => {
     })
     removeAuth();
     navigate('/invoice');
-    socket.emit("new_order", {
+    SocketInstance.emit("new_order", {
       message: "New Order!"
     })
   };
