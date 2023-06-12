@@ -7,11 +7,10 @@ import { actionType } from "../context/reducer";
 import EmptyCart from "../img/emptyCart.svg";
 import CartItem from "./CartItem";
 import Invoice from "./invoice";
-import { Link, useNavigate } from "react-router-dom";
-import { Navigate } from "react-router-dom/dist";
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import AxiosInstance from "../utils/AxiosInstance";
 import { removeAuth } from "../utils/auth";
+import socket from "../utils/SocketInstance";
 
 const CartContainer = () => {
   const [{ cartShow, cartItems, orderId }, dispatch] = useStateValue();
@@ -73,18 +72,10 @@ const CartContainer = () => {
     })
     removeAuth();
     navigate('/invoice');
-    alert("pesanan telah terekam, anda dapat scan ulang atau menutup manual website ini")
+    socket.emit("new_order", {
+      message: "New Order!"
+    })
   };
-
-  const handleDoneButton = () => {
-    // navigate('/invoicePage'); // ke halaman invoice
-  }
-
-  // const navigate = useNavigate();
-
-  // const handleCheckout = () => {
-  //   navigate("./invoice.jsx");
-  // };
 
   return (
     <motion.div
@@ -160,7 +151,6 @@ const CartContainer = () => {
                       className="px-4 py-2 bg-gray-500 text-white rounded-lg"
                       onClick={() => {
                         setShowInvoice(false);
-                        handleDoneButton();
                         // alert(
                         //   "Jika website tidak menutup secara otomatis silakan tutup jendela secara manual karena pesanan anda telah direkam. Terima kasih"
                         // );

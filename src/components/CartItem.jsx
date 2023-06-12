@@ -3,7 +3,6 @@ import { BiMinus, BiPlus } from "react-icons/bi";
 import { motion } from "framer-motion";
 import { useStateValue } from "../context/StateProvider";
 import { actionType } from "../context/reducer";
-import { fetchCart } from "../utils/fetchLocalStorageData";
 import { BASE_URL_MENU } from "../utils/constant";
 let items = [];
 

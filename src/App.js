@@ -2,14 +2,9 @@ import React, { useEffect, useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import { CreateContainer, Header, MainContainer, MenuContainer, HomeContainer } from "./components";
 import { useStateValue } from "./context/StateProvider";
-import { getAllFoodItems } from "./utils/firebaseFunctions";
 import { actionType } from "./context/reducer";
 import LoadingScreen from "./components/loadingscreen";
-import AxiosInstance from "./utils/AxiosInstance";
-import axios from "axios";
 import { BrowserRouter as Router, Route, Routes, Link, useNavigate, useLocation } from "react-router-dom";
-import { BASE_SIGNIN_USER } from "./utils/constant";
-import { getToken } from "./utils/auth";
 import Expired from "./components/Expired";
 import InvoicePage from "./components/invoicePage";
 
